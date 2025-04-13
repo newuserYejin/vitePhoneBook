@@ -10,13 +10,17 @@ function App() {
   return (
     <>
       <div>
-        <h1>Phone Book</h1>
+        <h1 className="title">Phone Book</h1>
 
-        <Grid container spacing={2}>
-          <Grid size={6}>
+        <Grid
+          container
+          spacing={2}
+          sx={{ padding: { xs: "0 5%", sm: "0 8%" } }}
+        >
+          <Grid size={6} sx={{ border: "4px solid #ccc", padding: 2 }}>
             <ContactForm />
           </Grid>
-          <Grid size={6}>
+          <Grid size={6} sx={{ border: "4px solid #ccc", padding: 2 }}>
             <ContactList />
           </Grid>
         </Grid>

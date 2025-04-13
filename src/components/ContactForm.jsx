@@ -13,11 +13,33 @@ const ContactForm = () => {
     }
 
     addContact(name, phoneNumber);
+    setName("");
+    setPhoneNumber("");
   };
+
+  // 하이픈을 적용한 포맷터
+  const formatPhoneNumber = (value) => {
+    const onlyNums = value.replace(/\D/g, "").slice(0, 11); // 숫자만, 최대 11자리
+
+    if (onlyNums.length < 4) return onlyNums;
+    if (onlyNums.length < 8) {
+      return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3)}`;
+    }
+    return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3, 7)}-${onlyNums.slice(
+      7
+    )}`;
+  };
+
+  function settingNumber(input) {
+    const formatted = formatPhoneNumber(input);
+
+    setPhoneNumber(formatted);
+  }
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
       <TextField
+        required
         value={name}
         id="name"
         label="이름"
@@ -25,13 +47,15 @@ const ContactForm = () => {
         onChange={(e) => setName(e.target.value)}
       />
       <TextField
+        required
+        error={false}
         value={phoneNumber}
         id="phoneNumber"
         label="전화번호"
         variant="outlined"
-        onChange={(e) => setPhoneNumber(e.target.value)}
+        inputProps={{ inputMode: "numeric" }}
+        onChange={(e) => settingNumber(e.target.value)}
       />
-
       <Button variant="contained" size="large" onClick={handleAddContact}>
         추가
       </Button>
