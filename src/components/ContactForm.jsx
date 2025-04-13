@@ -37,8 +37,15 @@ const ContactForm = () => {
   }
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      gap={2}
+      sx={{ padding: { xs: "0", sm: "10px 10%", md: "30px 20%" } }}
+    >
       <TextField
+        fullWidth
         required
         value={name}
         id="name"
@@ -47,6 +54,7 @@ const ContactForm = () => {
         onChange={(e) => setName(e.target.value)}
       />
       <TextField
+        fullWidth
         required
         error={false}
         value={phoneNumber}
@@ -56,7 +64,12 @@ const ContactForm = () => {
         inputProps={{ inputMode: "numeric" }}
         onChange={(e) => settingNumber(e.target.value)}
       />
-      <Button variant="contained" size="large" onClick={handleAddContact}>
+      <Button
+        fullWidth
+        variant="contained"
+        size="large"
+        onClick={handleAddContact}
+      >
         추가
       </Button>
     </Box>

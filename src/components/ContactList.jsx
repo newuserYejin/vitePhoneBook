@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import usePhoneBookStore from "../store/usePhonBookStore";
-import { Box, TextField } from "@mui/material";
+import { Box, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { Padding } from "@mui/icons-material";
 
 const ContactList = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -28,23 +29,53 @@ const ContactList = () => {
   }, [filteredPhoneBook]);
 
   return (
-    <div>
-      <Box display="flex" alignItems="flex-end" gap={2}>
-        <SearchIcon />
+    <Box sx={{ height: "100%" }} display="flex" flexDirection="column" gap={1}>
+      <Box display="flex" alignItems="center" justifyContent="center" gap={2}>
         <TextField
           id="searchInput"
-          label="search"
           variant="standard"
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            },
+          }}
+          sx={{ width: "100%", margin: "10px" }}
           onChange={(e) => searchPerson(e.target.value)}
         />
       </Box>
-      {filteredPhoneBook.map((item) => (
-        <div key={item.id}>
-          <p>{item.name}</p>
-          <p>{item.phoneNumber}</p>
-        </div>
-      ))}
-    </div>
+      {/* <Box sx={{ padding: "0 10px", color: "#797979" }}>연락처 목록</Box> */}
+      <Box
+        sx={{
+          maxHeight: "90%",
+          padding: "0 10px",
+          overflow: "auto",
+        }}
+        display="flex"
+        flexDirection="column"
+        gap={2}
+      >
+        {filteredPhoneBook.length == 0 ? (
+          <Box sx={{ fontWeight: "bold" }}>추가된 연락처가 없습니다.</Box>
+        ) : (
+          filteredPhoneBook.map((item) => (
+            <Box
+              key={item.id}
+              display="flex"
+              gap={{ xs: 1, md: 2 }}
+              flexDirection={{ xs: "column", md: "row" }}
+              sx={{ borderBottom: "solid 1px rgb(25, 118, 210)" }}
+            >
+              <Box>{item.name}</Box>
+              <Box sx={{ marginBottom: "10px" }}>{item.phoneNumber}</Box>
+            </Box>
+          ))
+        )}
+      </Box>
+    </Box>
   );
 };
 
